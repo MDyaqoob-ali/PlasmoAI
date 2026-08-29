@@ -108,7 +108,8 @@ def research_page():
 @app.route("/holdout_images/<path:filename>")
 def serve_holdout_image(filename):
     """Serve microscopic cell images from the holdout dataset folder."""
-    return send_from_directory("holdout_dataset", filename)
+    safe_filename = os.path.basename(filename)
+    return send_from_directory("holdout_dataset", safe_filename)
 
 
 # ==========================================
@@ -308,4 +309,6 @@ def server_error(e):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    debug_mode = os.environ.get("FLASK_DEBUG", "false").lower() in ("true", "1", "t")
+    app.run(host="0.0.0.0", port=port, debug=debug_mode)

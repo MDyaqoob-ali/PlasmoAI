@@ -12,3 +12,5 @@ Thumbs.db
 dist/
 build/
 .pytest_cache/
+.github/workflows/
+Notebooks/alexnet.h5
