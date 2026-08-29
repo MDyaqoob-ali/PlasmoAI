@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PlasmoAI — Clinical Deep Learning for Malaria Parasite Microscopic Detection using Two-Stage Convolutional Neural Networks on segmented thin blood smears.">
+    <meta name="keywords" content="Malaria Detection, Deep Learning, CNN, Computer Vision, Erythrocyte, Parasitemia, Microscopy, Medical AI">
+    <meta property="og:title" content="{{ title or 'PlasmoAI — Malaria Detection Platform' }}">
+    <meta property="og:description" content="High-precision binary classification of malarial blood smear microscopy images with 95.23% accuracy.">
+    <meta property="og:type" content="website">
+
+    <title>{{ title or 'PlasmoAI — Clinical Deep Learning for Malaria Detection' }}</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}">
+
+    <!-- Google Fonts & Design System -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/design-system.css') }}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Site Navigation Header -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="/" class="brand-logo">
+                <div class="brand-icon">🔬</div>
+                <div>
+                    PlasmoAI
+                    <span class="brand-badge">Clinical AI</span>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li class="nav-item"><a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+                    <li class="nav-item"><a href="/diagnose" class="{% if request.path in ['/diagnose', '/form'] %}active{% endif %}">Diagnostic Lab</a></li>
+                    <li class="nav-item"><a href="/batch" class="{% if request.path == '/batch' %}active{% endif %}">Batch Smear Studio</a></li>
+                    <li class="nav-item"><a href="/model" class="{% if request.path == '/model' %}active{% endif %}">CNN Architecture</a></li>
+                    <li class="nav-item"><a href="/research" class="{% if request.path in ['/research', '/team'] %}active{% endif %}">Research &amp; Dataset</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark/light theme" title="Toggle Theme">
+                    ☀️
+                </button>
+                <a href="/diagnose" class="btn btn-primary btn-sm no-mobile">
+                    Run Diagnosis
+                </a>
+                <button type="button" class="mobile-nav-toggle" aria-label="Toggle navigation menu">
+                    ☰
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Body Content -->
+    <main style="flex: 1;">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="brand-logo" style="margin-bottom: 1rem;">
+                        <div class="brand-icon">🔬</div>
+                        <span>PlasmoAI</span>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 1.25rem;">
+                        Clinical-grade artificial intelligence for automated thin blood smear parasite classification. Trained on 27,558 segmented erythrocyte microscopy images from the NIH Malaria Screener research repository.
+                    </p>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <span class="badge badge-primary">Accuracy: 95.23%</span>
+                        <span class="badge badge-healthy">Sub-15ms Latency</span>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Clinical Applications</h4>
+                    <ul class="footer-links">
+                        <li><a href="/diagnose">Single Cell Diagnostic Lab</a></li>
+                        <li><a href="/batch">Cohort Parasitemia Index</a></li>
+                        <li><a href="/model">Model Layer Specifications</a></li>
+                        <li><a href="/diagnose?sample=C101P62ThinF_IMG_20150918_151149_cell_73.png">Parasitized Ring Stage Demo</a></li>
+                        <li><a href="/diagnose?sample=C109P70ThinF_IMG_20150930_103811_cell_31.png">Normal Erythrocyte Demo</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Research &amp; References</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://lhncbc.nlm.nih.gov/LHC-research/LHC-projects/image-processing/malaria-datasheet.html" target="_blank" rel="noopener">NIH Malaria Screener Datasheet</a></li>
+                        <li><a href="https://www.kaggle.com/iarunava/cell-images-for-detecting-malaria" target="_blank" rel="noopener">NIH Benchmark Dataset</a></li>
+                        <li><a href="/research">Clinical Research Methodology</a></li>
+                        <li><a href="/model">Neural Network Topology</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Compliance &amp; Standards</h4>
+                    <p style="font-size: 0.825rem; color: var(--text-muted); line-height: 1.6;">
+                        <strong>Medical Research Notice:</strong> PlasmoAI is engineered for clinical decision support, screening acceleration, and pathology research. Diagnostic findings should be corroborated with Giemsa thin/thick microscopy and PCR assays.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>
+                    © 2026 <strong>PlasmoAI</strong> — Open Source Medical Deep Learning Platform. Released under MIT License.
+                </div>
+                <div style="display: flex; gap: 1.5rem;">
+                    <a href="/research" style="color: var(--text-muted);">Research &amp; Dataset</a>
+                    <a href="/model" style="color: var(--text-muted);">Model Specifications</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Client Scripts -->
+    <script src="{{ url_for('static', filename='js/plasmo-app.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

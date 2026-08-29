@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section" style="padding-top: 3rem;">
+    <div class="container">
+        <!-- Header -->
+        <div style="margin-bottom: 3rem; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <span class="badge badge-primary" style="margin-bottom: 0.75rem;">Deep Learning Architecture</span>
+            <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Convolutional Neural Network Specifications</h1>
+            <p>Interactive architecture visualizer and training evaluation metrics for the PlasmoAI 16-layer binary classification pipeline.</p>
+        </div>
+
+        <!-- Metrics Overview Cards -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+            <div class="card card-elevated">
+                <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Validation Accuracy</span>
+                <h3 style="font-size: 2rem; font-family: var(--font-mono); color: var(--color-healthy); margin-top: 0.25rem;">95.23%</h3>
+                <p style="font-size: 0.8rem; margin: 0;">Evaluated on independent test partition</p>
+            </div>
+
+            <div class="card card-elevated">
+                <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Input Resolution</span>
+                <h3 style="font-size: 2rem; font-family: var(--font-mono); color: var(--color-primary); margin-top: 0.25rem;">50×50×3</h3>
+                <p style="font-size: 0.8rem; margin: 0;">Bilinear RGB normalized tensors</p>
+            </div>
+
+            <div class="card card-elevated">
+                <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Training Dataset</span>
+                <h3 style="font-size: 2rem; font-family: var(--font-mono); color: var(--color-cyan); margin-top: 0.25rem;">27,558</h3>
+                <p style="font-size: 0.8rem; margin: 0;">Giemsa segmented thin blood smear cells</p>
+            </div>
+
+            <div class="card card-elevated">
+                <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Optimization</span>
+                <h3 style="font-size: 2rem; font-family: var(--font-mono); margin-top: 0.25rem;">Adam</h3>
+                <p style="font-size: 0.8rem; margin: 0;">Categorical Crossentropy loss</p>
+            </div>
+        </div>
+
+        <!-- Interactive Architecture Explorer (Grid) -->
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2.5rem; align-items: start;">
+            <!-- Left: Layer Sequence List -->
+            <div>
+                <h3 style="font-size: 1.35rem; margin-bottom: 1.25rem;">Network Pipeline Layers (Click to inspect)</h3>
+                
+                <div class="network-diagram">
+                    <!-- Layer 1 -->
+                    <div class="network-layer model-layer-card active" data-name="Conv2D (1)" data-type="Convolutional Layer" data-output="48 × 48 × 32" data-params="896" data-desc="Applies thirty-two 3x3 kernels across RGB channels with ReLU activation to detect micro-scale edge gradients, Giemsa stain hue shifts, and red blood cell boundaries.">
+                        <div class="layer-tag">Conv2D (1)</div>
+                        <div class="layer-bar-wrapper">
+                            <div class="layer-bar" style="width: 95%;"></div>
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; text-align: right;">48×48×32</div>
+                    </div>
+
+                    <!-- Layer 2 -->
+                    <div class="network-layer model-layer-card" data-name="MaxPooling2D (1)" data-type="Spatial Pooling" data-output="24 × 24 × 32" data-params="0" data-desc="2x2 max-pooling operation with stride 2 that reduces spatial resolution from 48x48 to 24x24 while maintaining dominant feature activations and translation invariance.">
+                        <div class="layer-tag">MaxPool2D (1)</div>
+                        <div class="layer-bar-wrapper">
+                            <div class="layer-bar" style="width: 75%; background: var(--color-cyan);"></div>
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; text-align: right;">24×24×32</div>
+                    </div>
+
+                    <!-- Layer 3 -->
+                    <div class="network-layer model-layer-card" data-name="BatchNormalization (1)" data-type="Normalization" data-output="24 × 24 × 32" data-params="128" data-desc="Normalizes activations along the channel axis to zero mean and unit variance. Accelerates convergence and acts as strong regularizer against slide staining contrast shifts.">
+                        <div class="layer-tag">BatchNorm (1)</div>
+                        <div class="layer-bar-wrapper">
+                            <div class="layer-bar" style="width: 75%; background: var(--color-warning);"></div>
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; text-align: right;">24×24×32</div>
+                    </div>
+
+                    <!-- Layer 4 -->
+                    <div class="network-layer model-layer-card" data-name="Conv2D (2)" data-type="Convolutional Layer" data-output="22 × 22 × 32" data-params="9,248" data-desc="Deep convolutional stage applying 32 kernels over 32 feature maps. Captures complex morphological patterns: chromatin rings, trophozoite vacuoles, and intracellular Plasmodium parasite contours.">
+                        <div class="layer-tag">Conv2D (2)</div>
+                        <div class="layer-bar-wrapper">
+                            <div class="layer-bar" style="width: 65%;"></div>
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; text-align: right;">22×22×32</div>
+                    </div>
+
+                    <!-- Layer 5 -->
+                    <div class="network-layer model-layer-card" data-name="MaxPooling2D (2)" data-type="Spatial Pooling" data-output="11 × 11 × 32" data-params="0" data-desc="Second pooling stage downsamples spatial feature maps to 11x11, producing high-level abstracted feature maps.">
+                        <div class="layer-tag">MaxPool2D (2)</div>
+                        <div class="layer-bar-wrapper">
+                            <div class="layer-bar" style="width: 45%; background: var(--color-cyan);"></div>
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; text-align: right;">11×11×32</div>
+                    </div>
+
+                    <!-- Layer 6 -->
+                    <div class="network-layer model-layer-card" data-name="BatchNorm & Flatten" data-type="Feature Vectorization" data-output="3,872 Dimensions" data-params="128" data-desc="Flattens 11x11x32 tensor into a 3,872-element 1D feature vector for high-density fully connected classification.">
+                        <div class="layer-tag">Flatten (1)</div>
+                        <div class="layer-bar-wrapper">
+                            <div class="layer-bar" style="width: 50%; background: var(--color-warning);"></div>
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; text-align: right;">3,872</div>
+                    </div>
+
+                    <!-- Layer 7 -->
+                    <div class="network-layer model-layer-card" data-name="Dense (1) — 512 Units" data-type="Fully Connected Layer" data-output="512" data-params="1,982,976" data-desc="First dense classification layer comprising 512 ReLU neurons with BatchNormalization and 0.2 Dropout. Integrates high-level spatial visual features into holistic cell state representations.">
+                        <div class="layer-tag">Dense (512)</div>
+                        <div class="layer-bar-wrapper">
+                            <div class="layer-bar" style="width: 40%;"></div>
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; text-align: right;">512</div>
+                    </div>
+
+                    <!-- Layer 8 -->
+                    <div class="network-layer model-layer-card" data-name="Dense (2) — 256 Units" data-type="Fully Connected Layer" data-output="256" data-params="131,328" data-desc="Second dense layer condensing 512 features down to 256 specialized decision signals with BatchNormalization.">
+                        <div class="layer-tag">Dense (256)</div>
+                        <div class="layer-bar-wrapper">
+                            <div class="layer-bar" style="width: 25%;"></div>
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; text-align: right;">256</div>
+                    </div>
+
+                    <!-- Layer 9 -->
+                    <div class="network-layer model-layer-card" data-name="Dense Output (2 Classes)" data-type="Output Classifier" data-output="2 (Softmax / Sigmoid)" data-params="514" data-desc="Final output layer with 2 logits generating calibrated probabilities for Parasitized (index 0) vs Uninfected (index 1).">
+                        <div class="layer-tag" style="color: var(--color-healthy);">Output (2)</div>
+                        <div class="layer-bar-wrapper">
+                            <div class="layer-bar" style="width: 10%; background: var(--color-healthy);"></div>
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; text-align: right; color: var(--color-healthy);">2 Classes</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Inspector Details Box -->
+            <div style="position: sticky; top: 6rem;">
+                <h3 style="font-size: 1.35rem; margin-bottom: 1.25rem;">Layer Diagnostic Inspector</h3>
+                <div id="layerInspectorDetails">
+                    <div class="card card-elevated" style="border-left: 4px solid var(--color-primary);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 style="font-size: 1.35rem;">Conv2D (1)</h3>
+                            <span class="badge badge-primary">Convolutional Layer</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; background: var(--bg-surface-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                            <div>
+                                <strong style="display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Output Shape</strong>
+                                <span style="font-family: var(--font-mono); font-weight: 700;">48 × 48 × 32</span>
+                            </div>
+                            <div>
+                                <strong style="display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Trainable Parameters</strong>
+                                <span style="font-family: var(--font-mono); font-weight: 700;">896</span>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.925rem; color: var(--text-secondary); line-height: 1.6;">
+                            Applies thirty-two 3x3 kernels across RGB channels with ReLU activation to detect micro-scale edge gradients, Giemsa stain hue shifts, and red blood cell boundaries.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card card-elevated" style="margin-top: 1.5rem;">
+                    <h4 style="font-size: 1rem; margin-bottom: 0.75rem;">Model Training History</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        Trained for 25 epochs with batch size 120 on NVIDIA GPU acceleration. Achieved 95.23% accuracy on the test set.
+                    </p>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="/diagnose" class="btn btn-primary btn-sm">Test in Diagnostic Lab →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

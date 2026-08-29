@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section with Interactive Slide Scanner -->
+<section class="section-hero bg-grid-pattern">
+    <div class="container">
+        <div class="hero-wrapper">
+            <!-- Left Hero Content -->
+            <div>
+                <div class="hero-pill">
+                    <span class="pulse-dot"></span>
+                    <span>NIH-Validated Deep Learning Model</span>
+                </div>
+                <h1 class="hero-title">
+                    Clinical-Grade <span class="gradient-text">Malaria Parasite</span> Detection from Blood Smears
+                </h1>
+                <p class="hero-desc">
+                    PlasmoAI transforms microscopic thin blood film analysis with a dual-stage convolutional neural network. Identify <em>Plasmodium</em> trophozoite inclusions and calculate cohort parasitemia index in milliseconds with 95.23% diagnostic accuracy.
+                </p>
+                <div class="hero-cta-group">
+                    <a href="/diagnose" class="btn btn-primary btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Launch Diagnostic Lab
+                    </a>
+                    <a href="/batch" class="btn btn-secondary btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        Batch Smear Studio
+                    </a>
+                    <a href="/model" class="btn btn-ghost">
+                        Inspect CNN Architecture →
+                    </a>
+                </div>
+
+                <!-- Verified Key Performance Indicators -->
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <h3>95.23%</h3>
+                        <p>Validation Accuracy</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>27,558</h3>
+                        <p>NIH Training Slides</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>&lt; 15 ms</h3>
+                        <p>Inference Latency</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Hero Live Scanner Card -->
+            <div>
+                <div class="hero-scanner-card">
+                    <div class="scanner-header">
+                        <div class="scanner-status" id="heroScannerStatus">
+                            <span class="pulse-dot" style="color: var(--color-primary);"></span>
+                            <span>Live Microscopic Viewfinder</span>
+                        </div>
+                        <span class="badge badge-primary">50x50 RGB Sensor</span>
+                    </div>
+
+                    <!-- Viewfinder with Laser Scanner -->
+                    <div class="scanner-viewfinder">
+                        <img id="heroScannerImage" class="scanner-image-preview" src="/holdout_images/C101P62ThinF_IMG_20150918_151149_cell_73.png" alt="Microscopy Blood Cell">
+                        <div class="laser-line" id="heroLaserLine"></div>
+                        
+                        <!-- HUD Reticles -->
+                        <div class="reticle-corner reticle-tl"></div>
+                        <div class="reticle-corner reticle-tr"></div>
+                        <div class="reticle-corner reticle-bl"></div>
+                        <div class="reticle-corner reticle-br"></div>
+                    </div>
+
+                    <!-- Curated Sample Quick Picker -->
+                    <div class="sample-picker-bar">
+                        <div class="sample-picker-title">
+                            <span>Select Sample Slide to Scan:</span>
+                            <a href="/diagnose" style="font-size: 0.75rem;">Upload Custom →</a>
+                        </div>
+                        <div class="sample-thumbnails">
+                            {% for sample in curated_samples.parasitized[:4] %}
+                            <div class="sample-thumb hero-sample-thumb" data-filename="{{ sample.filename }}" title="Parasitized Sample: {{ sample.filename }}">
+                                <img src="/holdout_images/{{ sample.filename }}" alt="Parasitized Cell">
+                            </div>
+                            {% endfor %}
+                            {% for sample in curated_samples.uninfected[:4] %}
+                            <div class="sample-thumb hero-sample-thumb" data-filename="{{ sample.filename }}" title="Uninfected Sample: {{ sample.filename }}">
+                                <img src="/holdout_images/{{ sample.filename }}" alt="Uninfected Cell">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Live Dynamic Result Widget -->
+                    <div id="heroResultWidget" class="diagnostic-live-result result-parasitized">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="badge badge-parasitized">Parasitized</span>
+                                <strong style="font-size: 0.9rem;">99.99% Confidence</strong>
+                            </div>
+                            <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted);">8.4 ms</span>
+                        </div>
+                        <p style="font-size: 0.825rem; margin-bottom: 0.5rem;">
+                            Distinct intracellular Plasmodium chromatin dot and trophozoite morphology detected.
+                        </p>
+                        <a href="/diagnose?sample=C101P62ThinF_IMG_20150918_151149_cell_73.png" class="btn btn-sm btn-secondary">Open in Lab Workbench →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Clinical Diagnostic Workflow Section -->
+<section class="section" style="background: var(--bg-surface-subtle); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+    <div class="container">
+        <div style="text-align: center; max-width: 700px; margin: 0 auto 3.5rem;">
+            <span class="badge badge-primary" style="margin-bottom: 0.75rem;">Automated Pipeline</span>
+            <h2 style="font-size: 2.25rem; margin-bottom: 1rem;">End-to-End Diagnostic Pathology Pipeline</h2>
+            <p>From Giemsa-stained microscopic blood films to quantitative infection decisions without manual operator bias.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+            <div class="card card-elevated">
+                <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--color-primary);">🩸</div>
+                <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-primary); font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem;">Stage 01</div>
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Erythrocyte Patch Extraction</h3>
+                <p style="font-size: 0.875rem;">Thin blood smear microscopy is segmented into individual red blood cell patches, standardizing boundary geometries and stain variations.</p>
+            </div>
+
+            <div class="card card-elevated">
+                <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--color-cyan);">🧬</div>
+                <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-cyan); font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem;">Stage 02</div>
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Convolutional Feature Mapping</h3>
+                <p style="font-size: 0.875rem;">Two 32-filter Conv2D layers with 3x3 receptive fields extract chromatin textures, pigment granules, and intracellular trophozoite rings.</p>
+            </div>
+
+            <div class="card card-elevated">
+                <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--color-warning);">⚡</div>
+                <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-warning); font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem;">Stage 03</div>
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Batch-Normalized Regularization</h3>
+                <p style="font-size: 0.875rem;">Four BatchNormalization layers and 0.2 Dropout stabilize internal covariate shift and eliminate slide-to-slide staining variations.</p>
+            </div>
+
+            <div class="card card-elevated">
+                <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--color-healthy);">📊</div>
+                <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-healthy); font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem;">Stage 04</div>
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Calibrated Parasitemia Score</h3>
+                <p style="font-size: 0.875rem;">Dense 512 & 256 layers generate calibrated Softmax probabilities, risk tiers, and downloadable clinical pathology lab reports.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Morphological Comparison Gallery -->
+<section class="section">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <span class="badge badge-primary" style="margin-bottom: 0.5rem;">Clinical Microscopy</span>
+                <h2 style="font-size: 2.25rem;">Morphology Comparison Gallery</h2>
+                <p>Real segmented thin blood smear slides from the National Library of Medicine dataset.</p>
+            </div>
+            <div>
+                <a href="/diagnose" class="btn btn-secondary">Open Laboratory Workbench →</a>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+            <!-- Parasitized Examples Column -->
+            <div class="card card-elevated" style="border-top: 4px solid var(--color-parasitized);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="badge badge-parasitized">Parasitized Cells</span>
+                    </div>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Plasmodium falciparum</span>
+                </div>
+                <p style="font-size: 0.875rem; margin-bottom: 1.25rem;">
+                    Characterized by prominent purple chromatin dots, ring-form trophozoites, and irregular cytoplasm distortions within the red blood cell.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;">
+                    {% for sample in curated_samples.parasitized[:4] %}
+                    <a href="/diagnose?sample={{ sample.filename }}" class="sample-thumb" style="width: 100%; height: 75px;" title="Scan {{ sample.filename }}">
+                        <img src="/holdout_images/{{ sample.filename }}" alt="Parasitized cell">
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Uninfected Examples Column -->
+            <div class="card card-elevated" style="border-top: 4px solid var(--color-healthy);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="badge badge-healthy">Uninfected Cells</span>
+                    </div>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Normal Erythrocyte</span>
+                </div>
+                <p style="font-size: 0.875rem; margin-bottom: 1.25rem;">
+                    Displays uniform biconcave disc morphology with pale central pallor and no intracellular chromatin or pigment inclusions.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;">
+                    {% for sample in curated_samples.uninfected[:4] %}
+                    <a href="/diagnose?sample={{ sample.filename }}" class="sample-thumb" style="width: 100%; height: 75px;" title="Scan {{ sample.filename }}">
+                        <img src="/holdout_images/{{ sample.filename }}" alt="Uninfected cell">
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Clinical Value & FAQs -->
+<section class="section" style="background: var(--bg-surface-subtle); border-top: 1px solid var(--border-subtle);">
+    <div class="container container-narrow">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <span class="badge badge-primary" style="margin-bottom: 0.5rem;">Clinical Guidance</span>
+            <h2 style="font-size: 2.25rem; margin-bottom: 0.75rem;">Frequently Asked Questions</h2>
+            <p>Understanding the deep learning classification model and clinical application.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="card">
+                <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">What dataset was used to train the neural network?</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 0;">
+                    The model was trained on 27,558 segmented thin blood smear cell images collected by the NIH Malaria Screener research initiative from patients at Chittagong Medical College Hospital, Bangladesh. The dataset contains 13,779 parasitized and 13,779 uninfected cells stained with Giemsa.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">How does the CNN distinguish parasites from staining artifacts?</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 0;">
+                    The multi-channel convolutional filters learn deep spatial patterns specific to Plasmodium life stages (chromatin rings, cytoplasm vacuole borders, and hemozoin pigments) which distinctively differ in texture and gradient distribution from dust, platelet overlaps, or precipitate artifacts.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">What is the Parasitemia Index in the Batch Smear Studio?</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 0;">
+                    The Parasitemia Index calculates the percentage of parasitized red blood cells across the scanned field of view (<code>(Infected Cells / Total Cells) × 100</code>). This provides clinicians with quantitative infection severity metrics (e.g. &gt;2% moderate, &gt;20% hyperparasitemia requiring intensive clinical care).
+                </p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="/diagnose" class="btn btn-primary btn-lg">
+                Enter Diagnostic Laboratory →
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

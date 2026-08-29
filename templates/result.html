@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section" style="padding-top: 3rem;">
+    <div class="container container-narrow">
+        <!-- Actions Top Bar -->
+        <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <a href="/diagnose" class="btn btn-secondary">
+                ← Back to Diagnostic Lab
+            </a>
+            <div style="display: flex; gap: 0.75rem;">
+                <button type="button" class="btn btn-primary" onclick="window.print();">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                    Print / Export Clinical PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Clinical Medical Report Document -->
+        <div class="medical-report-container" id="medicalReportDoc">
+            <!-- Report Header -->
+            <div class="report-header">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <span style="font-size: 1.5rem;">🔬</span>
+                        <h2 style="font-size: 1.5rem; color: #0F172A; margin: 0;">PlasmoAI Diagnostic Pathology Report</h2>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #64748B; margin: 0;">Automated Microscopic Thin Blood Smear Parasite Examination</p>
+                </div>
+                <div style="text-align: right;">
+                    <span class="badge" id="repVerdictBadge" style="font-size: 0.95rem; padding: 0.4rem 0.9rem;">
+                        Diagnosis Pending
+                    </span>
+                </div>
+            </div>
+
+            <!-- Report Metadata Grid -->
+            <div class="report-meta-grid">
+                <div class="report-meta-item">
+                    <strong>Report ID</strong>
+                    <span id="repId">PLASMO-{{ '%06d' % (range(100000, 999999) | random) }}</span>
+                </div>
+                <div class="report-meta-item">
+                    <strong>Analysis Timestamp</strong>
+                    <span id="repTimestamp">2026-08-29 14:20:00 UTC</span>
+                </div>
+                <div class="report-meta-item">
+                    <strong>Specimen Filename</strong>
+                    <span id="repFilename" style="font-family: var(--font-mono); font-size: 0.85rem;">Specimen.png</span>
+                </div>
+                <div class="report-meta-item">
+                    <strong>Neural Network Architecture</strong>
+                    <span id="repModel">2-Stage CNN (Keras / Native Engine)</span>
+                </div>
+            </div>
+
+            <!-- Specimen Imagery & Hotspot Inspection -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.15rem; color: #0F172A; margin-bottom: 1rem; border-bottom: 1px solid #E2E8F0; padding-bottom: 0.5rem;">
+                    1. Microscopic Specimen Imagery
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div style="border: 1px solid #E2E8F0; border-radius: 8px; padding: 1rem; text-align: center; background: #F8FAFC;">
+                        <img id="repImgSource" src="/holdout_images/C101P62ThinF_IMG_20150918_151149_cell_73.png" style="max-height: 180px; margin: 0 auto 0.75rem; border-radius: 6px; border: 1px solid #CBD5E1;">
+                        <strong style="display: block; font-size: 0.8rem; color: #475569;">Segmented Erythrocyte (Thin Film)</strong>
+                    </div>
+                    <div style="border: 1px solid #E2E8F0; border-radius: 8px; padding: 1rem; text-align: center; background: #F8FAFC;">
+                        <img id="repImgHeatmap" src="/holdout_images/C101P62ThinF_IMG_20150918_151149_cell_73.png" style="max-height: 180px; margin: 0 auto 0.75rem; border-radius: 6px; border: 1px solid #CBD5E1;">
+                        <strong style="display: block; font-size: 0.8rem; color: #475569;">Parasite Chromatin Hotspot Map</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnostic Classification Details -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.15rem; color: #0F172A; margin-bottom: 1rem; border-bottom: 1px solid #E2E8F0; padding-bottom: 0.5rem;">
+                    2. Neural Network Classification Results
+                </h3>
+                
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 1rem;">
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                        <td style="padding: 0.75rem 0; color: #64748B;">Primary Diagnostic Result</td>
+                        <td style="padding: 0.75rem 0; font-weight: 700; font-size: 1.05rem;" id="repPrediction">Parasitized</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                        <td style="padding: 0.75rem 0; color: #64748B;">Calibrated Confidence Level</td>
+                        <td style="padding: 0.75rem 0; font-weight: 700;" id="repConfidence">99.99%</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                        <td style="padding: 0.75rem 0; color: #64748B;">Clinical Risk Category</td>
+                        <td style="padding: 0.75rem 0; font-weight: 700;" id="repSeverity">Critical / High Parasitemia</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                        <td style="padding: 0.75rem 0; color: #64748B;">Probability Breakdown</td>
+                        <td style="padding: 0.75rem 0;">
+                            Parasitized: <strong id="repProbP">99.99%</strong> | Uninfected: <strong id="repProbU">0.01%</strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Pathological Interpretation & Recommendation -->
+            <div style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.15rem; color: #0F172A; margin-bottom: 1rem; border-bottom: 1px solid #E2E8F0; padding-bottom: 0.5rem;">
+                    3. Pathological Interpretation & Clinical Guidance
+                </h3>
+                <div style="background: #F1F5F9; padding: 1.25rem; border-radius: 8px; border-left: 4px solid #0284C7; font-size: 0.9rem; line-height: 1.6;" id="repClinicalNotes">
+                    Distinct intracellular Plasmodium chromatin dot and trophozoite morphology detected with high certainty. Immediate antimalarial protocol recommended.
+                </div>
+            </div>
+
+            <!-- Doctor / Sign-off Footer -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; padding-top: 2rem; border-top: 1px solid #CBD5E1;">
+                <div>
+                    <div style="border-bottom: 1px solid #94A3B8; height: 40px; margin-bottom: 0.5rem;"></div>
+                    <span style="font-size: 0.8rem; color: #64748B;">Laboratory Pathologist Signature</span>
+                </div>
+                <div>
+                    <div style="border-bottom: 1px solid #94A3B8; height: 40px; margin-bottom: 0.5rem;"></div>
+                    <span style="font-size: 0.8rem; color: #64748B;">Verified Date & Medical Center</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const rawData = urlParams.get('data');
+    if (rawData) {
+        try {
+            const data = JSON.parse(decodeURIComponent(rawData));
+            document.getElementById('repFilename').textContent = data.filename || 'Specimen.png';
+            document.getElementById('repTimestamp').textContent = data.timestamp || new Date().toISOString();
+            document.getElementById('repPrediction').textContent = data.prediction;
+            document.getElementById('repConfidence').textContent = data.confidence + '%';
+            document.getElementById('repSeverity').textContent = data.severity;
+            document.getElementById('repProbP').textContent = data.probabilities.Parasitized + '%';
+            document.getElementById('repProbU').textContent = data.probabilities.Uninfected + '%';
+            document.getElementById('repClinicalNotes').textContent = data.clinical_note;
+
+            if (data.image_data) document.getElementById('repImgSource').src = data.image_data;
+            if (data.heatmap_data) document.getElementById('repImgHeatmap').src = data.heatmap_data;
+
+            const badge = document.getElementById('repVerdictBadge');
+            badge.textContent = data.prediction;
+            badge.className = `badge badge-${data.is_parasitized ? 'parasitized' : 'healthy'}`;
+        } catch(e) {
+            console.error('Failed to parse report data', e);
+        }
+    }
+});
+</script>
+{% endblock %}

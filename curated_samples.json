@@ -1,0 +1,102 @@
+{
+  "parasitized": [
+    {
+      "filename": "C101P62ThinF_IMG_20150918_151149_cell_73.png",
+      "prediction": "Parasitized",
+      "confidence": 99.99,
+      "severity": "Critical / High Parasitemia"
+    },
+    {
+      "filename": "C101P62ThinF_IMG_20150918_151507_cell_69.png",
+      "prediction": "Parasitized",
+      "confidence": 99.99,
+      "severity": "Critical / High Parasitemia"
+    },
+    {
+      "filename": "C101P62ThinF_IMG_20150923_170246_cell_75.png",
+      "prediction": "Parasitized",
+      "confidence": 100.0,
+      "severity": "Critical / High Parasitemia"
+    },
+    {
+      "filename": "C102P63ThinF_IMG_20150918_162300_cell_182.png",
+      "prediction": "Parasitized",
+      "confidence": 100.0,
+      "severity": "Critical / High Parasitemia"
+    },
+    {
+      "filename": "C112P73ThinF_IMG_20150930_131401_cell_167.png",
+      "prediction": "Parasitized",
+      "confidence": 100.0,
+      "severity": "Critical / High Parasitemia"
+    },
+    {
+      "filename": "C113P74ThinF_IMG_20150930_134429_cell_179.png",
+      "prediction": "Parasitized",
+      "confidence": 99.95,
+      "severity": "Critical / High Parasitemia"
+    },
+    {
+      "filename": "C115P76ThinF_IMG_20150930_162038_cell_207.png",
+      "prediction": "Parasitized",
+      "confidence": 99.97,
+      "severity": "Critical / High Parasitemia"
+    },
+    {
+      "filename": "C116P77ThinF_IMG_20150930_171844_cell_100.png",
+      "prediction": "Parasitized",
+      "confidence": 99.46,
+      "severity": "Critical / High Parasitemia"
+    }
+  ],
+  "uninfected": [
+    {
+      "filename": "C109P70ThinF_IMG_20150930_103811_cell_31.png",
+      "prediction": "Uninfected",
+      "confidence": 100.0,
+      "severity": "Clear / Uninfected"
+    },
+    {
+      "filename": "C110P71ThinF_IMG_20150930_105729_cell_18.png",
+      "prediction": "Uninfected",
+      "confidence": 98.04,
+      "severity": "Clear / Uninfected"
+    },
+    {
+      "filename": "C112P73ThinF_IMG_20150930_131753_cell_107.png",
+      "prediction": "Uninfected",
+      "confidence": 98.39,
+      "severity": "Clear / Uninfected"
+    },
+    {
+      "filename": "C119P80ThinF_IMG_20151002_124345_cell_43.png",
+      "prediction": "Uninfected",
+      "confidence": 99.33,
+      "severity": "Clear / Uninfected"
+    },
+    {
+      "filename": "C119P80ThinF_IMG_20151002_124345_cell_86.png",
+      "prediction": "Uninfected",
+      "confidence": 99.52,
+      "severity": "Clear / Uninfected"
+    },
+    {
+      "filename": "C136P97ThinF_IMG_20151005_140538_cell_94.png",
+      "prediction": "Uninfected",
+      "confidence": 99.42,
+      "severity": "Clear / Uninfected"
+    },
+    {
+      "filename": "C140P101ThinF_IMG_20151005_210026_cell_165.png",
+      "prediction": "Uninfected",
+      "confidence": 99.83,
+      "severity": "Clear / Uninfected"
+    },
+    {
+      "filename": "C140P101ThinF_IMG_20151005_210309_cell_136.png",
+      "prediction": "Uninfected",
+      "confidence": 99.86,
+      "severity": "Clear / Uninfected"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "project": {
+    "name": "PlasmoAI",
+    "version": "2.0.0",
+    "description": "Clinical Deep Learning for Malaria Parasite Detection",
+    "dataset": "US National Library of Medicine (NIH) Malaria Screener",
+    "model_accuracy": "95.23%",
+    "license": "MIT"
+  }
+}

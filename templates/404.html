@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section" style="padding-top: 5rem; text-align: center;">
+    <div class="container container-narrow">
+        <div style="font-size: 5rem; font-family: var(--font-mono); font-weight: 800; color: var(--color-primary); margin-bottom: 1rem;">
+            404
+        </div>
+        <span class="badge badge-warning" style="margin-bottom: 1rem;">Clinical Route Not Found</span>
+        <h1 style="font-size: 2.25rem; margin-bottom: 1rem;">Specimen or Page Unavailable</h1>
+        <p style="font-size: 1.1rem; max-width: 550px; margin: 0 auto 2.5rem;">
+            {{ error_message or "The requested diagnostic view or endpoint could not be found. Please check the URL or return to the laboratory workbench." }}
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+            <a href="/" class="btn btn-secondary">
+                Return to Home
+            </a>
+            <a href="/diagnose" class="btn btn-primary">
+                Open Diagnostic Laboratory →
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
